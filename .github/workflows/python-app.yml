@@ -1,34 +1,23 @@
-# Ce workflow utilise des actions qui ne sont pas certifiées par GitHub.
-# Elles sont fournies par un tiers et régies par
-# des conditions d’utilisation du service, une politique de confidentialité et un support distincts.
-# documentation en ligne.
+name: Python package
 
-# GitHub recommande d’épingler les actions à un SHA de commit.
-# Pour obtenir une version plus récente, vous devez mettre à jour le SHA.
-# Vous pouvez également référencer une balise ou une branche, mais l’action peut changer sans avertissement.
-
-name: Upload Python Package
-
-on:
-  release:
-    types: [published]
+on: [push]
 
 jobs:
-  deploy:
+  build:
+
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.10", "3.11"]
+
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
-      - name: Build package
-        run: python -m build
-      - name: Publish package
-        uses: pypa/gh-action-pypi-publish@v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          python-version: ${{ matrix.python }}
+      - name: Install tox and any other packages
+        run: pip install tox
+      - name: Run tox
+        # Run tox using the version of Python in `PATH`
+        run: tox -e py

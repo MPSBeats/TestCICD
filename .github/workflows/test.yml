@@ -1,0 +1,2 @@
+- name: Rational Functional Tester - UI Test GitHub Action
+  uses: IBM/devopsauto-uitest-actions@v1

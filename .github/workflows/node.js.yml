@@ -7,16 +7,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: ⎔ Setup node
+      - name: Setup node
         uses: actions/setup-node@v3
         with:
           cache: npm
 
-      - name: 📥 Download deps
+      - name: Download deps
         run: npm ci
 
-      - name: 🏗 Build
+      - name: Build
         run: npm run build

@@ -1,19 +1,6 @@
 name: Test Release
 
-on:
-  pull_request:
-    branches:
-      - '+([0-9])?(.{+([0-9]),x}).x'
-      - main
-      - master
-      - alpha
-      - beta
-      - next
-      - next-major
-    paths-ignore:
-      - 'website/**'
-      - '**/*.md'
-      - '**/*.mdx'
+on: [push]
 
 jobs:
   test-release:
